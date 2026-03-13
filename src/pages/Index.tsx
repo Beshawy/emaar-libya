@@ -16,20 +16,25 @@ const HomePage = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+      <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 flex flex-col items-center justify-center overflow-hidden">
         <img src="/images/hero.jpg" alt="Emaar Libya Factory" className="absolute inset-0 w-full h-full object-cover" />
         <div className="hero-overlay absolute inset-0" />
-        <div className="relative z-20 text-center px-4 max-w-3xl mx-auto">
-          <img
-            src="/images/logo.jpeg"
-            alt="Emaar Libya"
-            className="block h-28 w-28 md:h-40 md:w-40 bg-white rounded-full mx-auto mb-6 shadow-2xl object-contain border-4 border-white relative z-50 opacity-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
-          />
+        <div className="relative z-20 text-center px-4 max-w-3xl mx-auto flex flex-col items-center">
+          <div className="relative mb-6 md:mb-8 group">
+            {/* Glowing orb effect behind the logo */}
+            <div className="absolute inset-0 bg-white/20 rounded-full blur-[30px] md:blur-[50px] transform scale-125 transition-all duration-700 group-hover:scale-150 group-hover:bg-white/30 z-0"></div>
+            
+            <img
+              src="/images/loho.png"
+              alt="Emaar Libya"
+              className="block h-32 md:h-48 lg:h-56 w-auto object-contain relative z-50 drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]"
+            />
+          </div>
           <h1
-            className="font-cairo font-bold text-3xl md:text-5xl text-primary-foreground mb-4 leading-tight hero-animate hero-animate-2"
+            className="font-cairo font-bold text-2xl md:text-4xl lg:text-5xl text-primary-foreground mb-3 leading-tight hero-animate hero-animate-2"
             dangerouslySetInnerHTML={{ __html: t.hero.title }}
           />
-          <p className="text-primary-foreground/80 text-lg md:text-xl mb-8 font-inter hero-animate hero-animate-3">
+          <p className="text-primary-foreground/80 text-base md:text-lg lg:text-xl mb-6 font-inter hero-animate hero-animate-3">
             {t.hero.subtitle}
           </p>
           <div className="flex flex-wrap gap-4 justify-center hero-animate hero-animate-4">
