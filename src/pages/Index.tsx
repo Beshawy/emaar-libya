@@ -19,11 +19,11 @@ const HomePage = () => {
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <img src="/images/hero.jpg" alt="Emaar Libya Factory" className="absolute inset-0 w-full h-full object-cover" />
         <div className="hero-overlay absolute inset-0" />
-        <div className="relative z-10 text-center px-4 max-w-3xl">
+        <div className="relative z-20 text-center px-4 max-w-3xl mx-auto">
           <img
             src="/images/logo.jpeg"
             alt="Emaar Libya"
-            className="h-20 w-20 rounded-lg mx-auto mb-6 shadow-lg hero-animate hero-animate-1 float-icon"
+            className="block h-28 w-28 md:h-40 md:w-40 bg-white rounded-full mx-auto mb-6 shadow-2xl object-contain border-4 border-white relative z-50 opacity-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
           />
           <h1
             className="font-cairo font-bold text-3xl md:text-5xl text-primary-foreground mb-4 leading-tight hero-animate hero-animate-2"

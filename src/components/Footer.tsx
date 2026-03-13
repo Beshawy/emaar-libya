@@ -60,10 +60,15 @@ const Footer = () => {
             <div className="footer-col">
               <h3 className="font-cairo font-semibold text-lg mb-4">{t.footer.contactInfo}</h3>
               <div className="flex flex-col gap-3 text-sm text-secondary-foreground/70">
-                <div className="flex items-center gap-2 group">
+                <a
+                  href={`https://wa.me/${companyInfo.phone.replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 group hover:text-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 rounded"
+                >
                   <Phone className="h-4 w-4 text-accent transition-transform duration-300 group-hover:scale-125" />
-                  <span dir="ltr">{companyInfo.phone}</span>
-                </div>
+                  <span dir="ltr" className="leading-none mt-0.5">{companyInfo.phone}</span>
+                </a>
                 <div className="flex items-center gap-2 group">
                   <Mail className="h-4 w-4 text-accent transition-transform duration-300 group-hover:scale-125" />
                   <span>{companyInfo.email}</span>
