@@ -41,7 +41,7 @@ const HomePage = () => {
             <img
               src="/images/loho.png"
               alt="Emaar Libya"
-              className="block h-40 md:h-56 lg:h-64 xl:h-72 w-auto object-contain relative z-50 drop-shadow-[0_0_30px_rgba(255,255,255,0.9)] animate-float transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
+              className="block h-48 md:h-64 lg:h-72 xl:h-80 w-auto object-contain relative z-50 drop-shadow-[0_0_30px_rgba(255,255,255,0.9)] animate-float transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
             />
           </div>
           <h1
