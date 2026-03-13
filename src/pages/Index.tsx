@@ -25,9 +25,10 @@ const HomePage = () => {
             alt="Emaar Libya"
             className="h-20 w-20 rounded-lg mx-auto mb-6 shadow-lg hero-animate hero-animate-1 float-icon"
           />
-          <h1 className="font-cairo font-bold text-3xl md:text-5xl text-primary-foreground mb-4 leading-tight hero-animate hero-animate-2">
-            {t.hero.title}
-          </h1>
+          <h1
+            className="font-cairo font-bold text-3xl md:text-5xl text-primary-foreground mb-4 leading-tight hero-animate hero-animate-2"
+            dangerouslySetInnerHTML={{ __html: t.hero.title }}
+          />
           <p className="text-primary-foreground/80 text-lg md:text-xl mb-8 font-inter hero-animate hero-animate-3">
             {t.hero.subtitle}
           </p>
