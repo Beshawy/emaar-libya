@@ -98,7 +98,7 @@ export const translations = {
       admin: "لوحة التحكم",
     },
     hero: {
-      title: "شركة إعمار ليبيا للأبواب والنوافذ <span class='block mt-3 md:mt-5'>الألومنيوم</span>",
+      title: "مصنع إعمار ليبيا للأبواب والنوافذ <span class='block mt-3 md:mt-5'>الألومنيوم</span>",
       subtitle: "نقدم الجودة منذ 2007",
       contact: "اتصل بنا",
       products: "عرض المنتجات",

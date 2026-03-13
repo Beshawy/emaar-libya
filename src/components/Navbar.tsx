@@ -23,10 +23,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-2">
-          <img src="/images/logo.jpeg" alt="Emaar Libya" className="h-10 w-10 rounded object-cover" />
-          <span className="font-cairo font-bold text-lg text-primary hidden sm:inline">
-            {lang === "ar" ? "إعمار ليبيا" : "Emaar Libya"}
-          </span>
+          <img src="/images/loho.png" alt="Emaar Libya" className="h-12 w-auto max-w-[150px] md:h-16 rounded-md object-contain drop-shadow-sm" />
         </Link>
 
         {/* Desktop links */}
@@ -35,9 +32,8 @@ const Navbar = () => {
             <Link
               key={link.to}
               to={link.to}
-              className={`text-sm font-medium transition-colors hover:text-accent ${
-                isActive(link.to) ? "text-accent font-semibold" : "text-foreground"
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-accent ${isActive(link.to) ? "text-accent font-semibold" : "text-foreground"
+                }`}
             >
               {link.label}
             </Link>
@@ -72,9 +68,8 @@ const Navbar = () => {
                   key={link.to}
                   to={link.to}
                   onClick={() => setOpen(false)}
-                  className={`group rounded-lg px-3 py-2 text-sm font-semibold transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10 ${
-                    isActive(link.to) ? "text-white bg-white/15 ring-1 ring-white/15" : "text-white"
-                  }`}
+                  className={`group rounded-lg px-3 py-2 text-sm font-semibold transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/10 ${isActive(link.to) ? "text-white bg-white/15 ring-1 ring-white/15" : "text-white"
+                    }`}
                 >
                   <span className="relative">
                     {link.label}
