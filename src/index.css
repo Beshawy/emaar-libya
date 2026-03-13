@@ -237,3 +237,61 @@ html {
 .stat-pop:nth-child(2) { animation-delay: 0.18s; }
 .stat-pop:nth-child(3) { animation-delay: 0.31s; }
 
+/* ==========================================
+   LOGO ENHANCEMENT ANIMATIONS
+   ========================================== */
+
+/* Logo floating animation */
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(1deg); }
+  50% { transform: translateY(-12px) rotate(0deg); }
+  75% { transform: translateY(-8px) rotate(-1deg); }
+}
+.animate-float {
+  animation: logoFloat 4s ease-in-out infinite;
+}
+
+/* Shimmer sweep effect */
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(200%) skewX(-12deg); }
+}
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Enhanced glow pulse */
+@keyframes glowPulse {
+  0%, 100% { 
+    filter: brightness(1) saturate(1);
+    transform: scale(1);
+  }
+  50% { 
+    filter: brightness(1.2) saturate(1.3);
+    transform: scale(1.05);
+  }
+}
+
+/* Particle floating animation */
+@keyframes particleFloat {
+  0%, 100% { 
+    transform: translateY(0) translateX(0);
+    opacity: 0.8;
+  }
+  33% { 
+    transform: translateY(-15px) translateX(5px);
+    opacity: 1;
+  }
+  66% { 
+    transform: translateY(-8px) translateX(-3px);
+    opacity: 0.9;
+  }
+}
+
+/* Apply particle animation to logo particles */
+.group:hover .animate-ping,
+.group:hover .animate-pulse {
+  animation: particleFloat 2s ease-in-out infinite;
+}
+

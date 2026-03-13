@@ -21,13 +21,27 @@ const HomePage = () => {
         <div className="hero-overlay absolute inset-0" />
         <div className="relative z-20 text-center px-4 max-w-3xl mx-auto flex flex-col items-center">
           <div className="relative mb-6 md:mb-8 group">
-            {/* Glowing orb effect behind the logo */}
-            <div className="absolute inset-0 bg-white/20 rounded-full blur-[30px] md:blur-[50px] transform scale-125 transition-all duration-700 group-hover:scale-150 group-hover:bg-white/30 z-0"></div>
+            {/* Multi-layer glowing orb effects */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-pink-400/30 rounded-full blur-[40px] md:blur-[60px] transform scale-150 animate-pulse transition-all duration-700 group-hover:scale-175 group-hover:from-blue-400/40 group-hover:via-purple-400/40 group-hover:to-pink-400/40 z-0"></div>
+            <div className="absolute inset-0 bg-white/25 rounded-full blur-[25px] md:blur-[35px] transform scale-125 animate-bounce transition-all duration-500 group-hover:scale-150 group-hover:bg-white/35 z-10"></div>
+            
+            {/* Shimmer effect overlay */}
+            <div className="absolute inset-0 rounded-full overflow-hidden z-20">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12 animate-shimmer"></div>
+            </div>
+            
+            {/* Rotating light particles */}
+            <div className="absolute inset-0 z-30">
+              <div className="absolute top-0 left-1/2 w-2 h-2 bg-white rounded-full animate-ping transform -translate-x-1/2"></div>
+              <div className="absolute bottom-0 left-1/4 w-1 h-1 bg-blue-300 rounded-full animate-pulse transform" style={{ animationDelay: '0.5s' }}></div>
+              <div className="absolute top-1/4 right-1/4 w-1.5 h-1.5 bg-purple-300 rounded-full animate-pulse transform" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-pink-300 rounded-full animate-pulse transform" style={{ animationDelay: '1.5s' }}></div>
+            </div>
             
             <img
               src="/images/loho.png"
               alt="Emaar Libya"
-              className="block h-32 md:h-48 lg:h-56 w-auto object-contain relative z-50 drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]"
+              className="block h-40 md:h-56 lg:h-64 xl:h-72 w-auto object-contain relative z-50 drop-shadow-[0_0_30px_rgba(255,255,255,0.9)] animate-float transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
             />
           </div>
           <h1
