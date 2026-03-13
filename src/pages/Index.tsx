@@ -41,26 +41,26 @@ const HomePage = () => {
             <img
               src="/images/loho.png"
               alt="Emaar Libya"
-              className="block h-48 md:h-64 lg:h-72 xl:h-80 w-auto object-contain relative z-50 drop-shadow-[0_0_30px_rgba(255,255,255,0.9)] animate-float transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
+              className="block h-56 sm:h-60 md:h-64 lg:h-72 xl:h-80 w-auto object-contain relative z-50 drop-shadow-[0_0_30px_rgba(255,255,255,0.9)] animate-float transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_40px_rgba(255,255,255,1)]"
             />
           </div>
           <h1
-            className="font-cairo font-bold text-2xl md:text-4xl lg:text-5xl text-primary-foreground mb-3 leading-tight hero-animate hero-animate-2"
+            className="font-cairo font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-primary-foreground mb-3 leading-tight hero-animate hero-animate-2 text-center px-2"
             dangerouslySetInnerHTML={{ __html: t.hero.title }}
           />
-          <p className="text-primary-foreground/80 text-base md:text-lg lg:text-xl mb-6 font-inter hero-animate hero-animate-3">
+          <p className="text-primary-foreground/80 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-6 font-inter hero-animate hero-animate-3 text-center px-4 max-w-2xl mx-auto">
             {t.hero.subtitle}
           </p>
-          <div className="flex flex-wrap gap-4 justify-center hero-animate hero-animate-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4 justify-center hero-animate hero-animate-4 px-4">
             <Link
               to="/contact"
-              className="bg-accent text-accent-foreground px-6 py-3 rounded font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 active:scale-95"
+              className="bg-accent text-accent-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 active:scale-95 text-sm sm:text-base"
             >
               {t.hero.contact}
             </Link>
             <Link
               to="/services"
-              className="border border-primary-foreground/40 text-primary-foreground px-6 py-3 rounded font-semibold hover:bg-primary-foreground/10 transition-all duration-300 hover:scale-105 active:scale-95"
+              className="border border-primary-foreground/40 text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded font-semibold hover:bg-primary-foreground/10 transition-all duration-300 hover:scale-105 active:scale-95 text-sm sm:text-base"
             >
               {t.hero.products}
             </Link>
