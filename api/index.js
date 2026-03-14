@@ -23,11 +23,16 @@ cloudinary.config({
 // No longer using multer here; direct frontend uploading to Cloudinary instead.
 
 // MongoDB Connection
-const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri);
+let client;
 let dbPromise;
 
 async function getDatabase() {
+  if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI is missing in Environment Variables!');
+  }
+  if (!client) {
+    client = new MongoClient(process.env.MONGODB_URI);
+  }
   if (!dbPromise) {
     dbPromise = client.connect().then((c) => {
       console.log('Connected to MongoDB Atlas');
@@ -41,8 +46,10 @@ async function getDatabase() {
   return dbPromise;
 }
 
-// Ensure connection when app loads
-getDatabase().catch(console.error);
+// Ensure connection when app loads if URI exists
+if (process.env.MONGODB_URI) {
+  getDatabase().catch(console.error);
+}
 
 // =============== API ROUTES ===============
 
