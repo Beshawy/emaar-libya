@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useApi, MongoServiceItem, MongoGalleryItem, ServiceItem, GalleryItem } from "@/contexts/ApiContext";
+import { useData, ServiceItem, GalleryItem } from "@/contexts/DataContext";
 import { LogOut, Image, Wrench, Building, Plus, Pencil, Trash2, Save, X, Facebook, Video } from "lucide-react";
 import { toast } from "sonner";
 
@@ -9,13 +9,14 @@ const ADMIN_PASS = "Password246";
 
 const AdminPage = () => {
   const { t, lang } = useLanguage();
-  const { services, setServices, gallery, setGallery, companyInfo, setCompanyInfo, loading, error } = useApi();
+  const { services, setServices, gallery, setGallery, companyInfo, setCompanyInfo } = useData();
+  const loading = false, error = null;
   const [authed, setAuthed] = useState(() => sessionStorage.getItem("emaar-admin") === "true");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [tab, setTab] = useState<"services" | "gallery" | "company">("services");
-  const [editingService, setEditingService] = useState<MongoServiceItem | null>(null);
-  const [editingGallery, setEditingGallery] = useState<MongoGalleryItem | null>(null);
+  const [editingService, setEditingService] = useState<ServiceItem | null>(null);
+  const [editingGallery, setEditingGallery] = useState<GalleryItem | null>(null);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,21 +87,21 @@ const AdminPage = () => {
     );
   }
 
-  const saveService = (item: MongoServiceItem) => {
+  const saveService = (item: ServiceItem) => {
     setServices((prev) => {
-      const exists = prev.find((s) => s._id === item._id);
-      if (exists) return prev.map((s) => (s._id === item._id ? item : s));
-      return [...prev, { ...item, _id: undefined }];
+      const exists = prev.find((s) => s.id === item.id);
+      if (exists) return prev.map((s) => (s.id === item.id ? item : s));
+      return [...prev, { ...item, id: Date.now().toString() }];
     });
     setEditingService(null);
     toast.success("Saved!");
   };
 
-  const saveGalleryItem = (item: MongoGalleryItem) => {
+  const saveGalleryItem = (item: GalleryItem) => {
     setGallery((prev) => {
-      const exists = prev.find((g) => g._id === item._id);
-      if (exists) return prev.map((g) => (g._id === item._id ? item : g));
-      return [...prev, { ...item, _id: undefined }];
+      const exists = prev.find((g) => g.id === item.id);
+      if (exists) return prev.map((g) => (g.id === item.id ? item : g));
+      return [...prev, { ...item, id: Date.now().toString() }];
     });
     setEditingGallery(null);
     toast.success("Saved!");
@@ -159,7 +160,7 @@ const AdminPage = () => {
             )}
             <div className="space-y-2 sm:space-y-3 mt-4">
               {services.map((s) => (
-                <div key={s._id} className="flex flex-col sm:flex-row sm:items-center justify-between border border-border rounded p-3 gap-3">
+                <div key={s.id} className="flex flex-col sm:flex-row sm:items-center justify-between border border-border rounded p-3 gap-3">
                   <div className="flex items-center gap-3">
                     <img src={s.image} alt="" className="h-10 w-10 sm:h-12 sm:w-12 rounded object-cover flex-shrink-0" />
                     <div className="min-w-0 flex-1">
@@ -169,7 +170,7 @@ const AdminPage = () => {
                   </div>
                   <div className="flex gap-1 sm:gap-2">
                     <button onClick={() => setEditingService(s)} className="text-muted-foreground hover:text-accent p-1"><Pencil className="h-3 w-3 sm:h-4 sm:w-4" /></button>
-                    <button onClick={() => s._id && setServices((prev) => prev.filter((item) => item._id !== s._id))} className="text-muted-foreground hover:text-destructive p-1"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4" /></button>
+                    <button onClick={() => s.id && setServices((prev) => prev.filter((item) => item.id !== s.id))} className="text-muted-foreground hover:text-destructive p-1"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4" /></button>
                   </div>
                 </div>
               ))}
@@ -195,11 +196,11 @@ const AdminPage = () => {
             )}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 mt-4">
               {gallery.map((g) => (
-                <div key={g._id} className="relative group rounded overflow-hidden border border-border">
+                <div key={g.id} className="relative group rounded overflow-hidden border border-border">
                   <img src={g.image} alt="" className="w-full aspect-square object-cover" />
                   <div className="absolute inset-0 bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1 sm:gap-2">
                     <button onClick={() => setEditingGallery(g)} className="bg-card p-1.5 sm:p-2 rounded"><Pencil className="h-3 w-3 sm:h-4 sm:w-4 text-foreground" /></button>
-                    <button onClick={() => g._id && setGallery((prev) => prev.filter((item) => item._id !== g._id))} className="bg-card p-1.5 sm:p-2 rounded"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4 text-destructive" /></button>
+                    <button onClick={() => g.id && setGallery((prev) => prev.filter((item) => item.id !== g.id))} className="bg-card p-1.5 sm:p-2 rounded"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4 text-destructive" /></button>
                   </div>
                 </div>
               ))}
@@ -366,7 +367,7 @@ const CompanyForm = ({
   onSave,
   t,
 }: {
-  info: { phone: string; email: string; address: string; addressAr: string; facebook?: string };
+  info: { phone: string; email: string; address: string; addressAr: string; facebook: string };
   onSave: (i: { phone: string; email: string; address: string; addressAr: string; facebook: string }) => void;
   t: { admin: { save: string } };
 }) => {
