@@ -87,24 +87,52 @@ const AdminPage = () => {
     );
   }
 
-  const saveService = (item: ServiceItem) => {
-    setServices((prev) => {
-      const exists = prev.find((s) => s.id === item.id);
-      if (exists) return prev.map((s) => (s.id === item.id ? item : s));
-      return [...prev, { ...item, id: Date.now().toString() }];
-    });
-    setEditingService(null);
-    toast.success("Saved!");
+  const saveService = async (item: ServiceItem) => {
+    try {
+      const isNew = !item.id || item.id === "";
+      const method = isNew ? "POST" : "PUT";
+      const url = isNew ? "/api/services" : `/api/services/${item.id}`;
+      
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(item),
+      });
+      const savedItem = await res.json();
+      
+      setServices((prev) => {
+        if (isNew) return [...prev, savedItem];
+        return prev.map((s) => (s.id === item.id ? savedItem : s));
+      });
+      setEditingService(null);
+      toast.success("Saved!");
+    } catch (err) {
+      toast.error("Error saving service");
+    }
   };
 
-  const saveGalleryItem = (item: GalleryItem) => {
-    setGallery((prev) => {
-      const exists = prev.find((g) => g.id === item.id);
-      if (exists) return prev.map((g) => (g.id === item.id ? item : g));
-      return [...prev, { ...item, id: Date.now().toString() }];
-    });
-    setEditingGallery(null);
-    toast.success("Saved!");
+  const saveGalleryItem = async (item: GalleryItem) => {
+    try {
+      const isNew = !item.id || item.id === "";
+      const method = isNew ? "POST" : "PUT";
+      const url = isNew ? "/api/gallery" : `/api/gallery/${item.id}`;
+      
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(item),
+      });
+      const savedItem = await res.json();
+      
+      setGallery((prev) => {
+        if (isNew) return [...prev, savedItem];
+        return prev.map((g) => (g.id === item.id ? savedItem : g));
+      });
+      setEditingGallery(null);
+      toast.success("Saved!");
+    } catch (err) {
+      toast.error("Error saving gallery item");
+    }
   };
 
   return (
@@ -170,7 +198,13 @@ const AdminPage = () => {
                   </div>
                   <div className="flex gap-1 sm:gap-2">
                     <button onClick={() => setEditingService(s)} className="text-muted-foreground hover:text-accent p-1"><Pencil className="h-3 w-3 sm:h-4 sm:w-4" /></button>
-                    <button onClick={() => s.id && setServices((prev) => prev.filter((item) => item.id !== s.id))} className="text-muted-foreground hover:text-destructive p-1"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4" /></button>
+                    <button onClick={async () => {
+                      if (s.id) {
+                        await fetch(`/api/services/${s.id}`, { method: "DELETE" });
+                        setServices((prev) => prev.filter((item) => item.id !== s.id));
+                        toast.success("Deleted!");
+                      }
+                    }} className="text-muted-foreground hover:text-destructive p-1"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4" /></button>
                   </div>
                 </div>
               ))}
@@ -200,7 +234,13 @@ const AdminPage = () => {
                   <img src={g.image} alt="" className="w-full aspect-square object-cover" />
                   <div className="absolute inset-0 bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1 sm:gap-2">
                     <button onClick={() => setEditingGallery(g)} className="bg-card p-1.5 sm:p-2 rounded"><Pencil className="h-3 w-3 sm:h-4 sm:w-4 text-foreground" /></button>
-                    <button onClick={() => g.id && setGallery((prev) => prev.filter((item) => item.id !== g.id))} className="bg-card p-1.5 sm:p-2 rounded"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4 text-destructive" /></button>
+                    <button onClick={async () => {
+                      if (g.id) {
+                        await fetch(`/api/gallery/${g.id}`, { method: "DELETE" });
+                        setGallery((prev) => prev.filter((item) => item.id !== g.id));
+                        toast.success("Deleted!");
+                      }
+                    }} className="bg-card p-1.5 sm:p-2 rounded"><Trash2 className="h-3 w-3 sm:h-4 sm:w-4 text-destructive" /></button>
                   </div>
                 </div>
               ))}
@@ -212,7 +252,20 @@ const AdminPage = () => {
         {tab === "company" && (
           <div className="bg-card rounded-lg border border-border p-4 sm:p-6">
             <h2 className="font-cairo font-semibold text-base sm:text-lg text-foreground mb-4">{t.admin.manageCompany}</h2>
-            <CompanyForm info={companyInfo} onSave={(info) => { setCompanyInfo(info); toast.success("Saved!"); }} t={t} />
+            <CompanyForm info={companyInfo} onSave={async (info) => { 
+              try {
+                const res = await fetch("/api/company", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(info)
+                });
+                const savedInfo = await res.json();
+                setCompanyInfo(savedInfo);
+                toast.success("Saved!");
+              } catch (err) {
+                toast.error("Error saving company info");
+              }
+            }} t={t} />
           </div>
         )}
       </div>
@@ -233,20 +286,40 @@ const ServiceForm = ({
 }) => {
   const [form, setForm] = useState(item);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setForm((prev) => ({ ...prev, image: reader.result as string }));
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      toast.info("جاري رفع الصورة...");
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.url) {
+        setForm((prev) => ({ ...prev, image: data.url }));
+        toast.success("تم الرفع بنجاح");
+      }
+    } catch (err) {
+      toast.error("خطأ في رفع الصورة");
+    }
   };
 
-  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setForm((prev) => ({ ...prev, video: reader.result as string }));
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      toast.info("جاري رفع الفيديو...");
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.url) {
+        setForm((prev) => ({ ...prev, video: data.url }));
+        toast.success("تم الرفع بنجاح");
+      }
+    } catch (err) {
+      toast.error("خطأ في رفع الفيديو");
+    }
   };
 
   return (
@@ -305,20 +378,40 @@ const GalleryForm = ({
 }) => {
   const [form, setForm] = useState(item);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setForm((prev) => ({ ...prev, image: reader.result as string }));
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      toast.info("جاري رفع الصورة...");
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.url) {
+        setForm((prev) => ({ ...prev, image: data.url }));
+        toast.success("تم الرفع بنجاح");
+      }
+    } catch (err) {
+      toast.error("خطأ في رفع الصورة");
+    }
   };
 
-  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setForm((prev) => ({ ...prev, video: reader.result as string }));
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      toast.info("جاري رفع الفيديو...");
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.url) {
+        setForm((prev) => ({ ...prev, video: data.url }));
+        toast.success("تم الرفع بنجاح");
+      }
+    } catch (err) {
+      toast.error("خطأ في رفع الفيديو");
+    }
   };
 
   return (
