@@ -62,6 +62,7 @@ const DataContext = createContext<DataContextType | null>(null);
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [services, setServices] = useState<ServiceItem[]>(() => {
+    // Try to get data from localStorage first, then fallback to defaults
     const saved = localStorage.getItem("emaar-services");
     return saved ? JSON.parse(saved) : defaultServices;
   });
@@ -74,12 +75,88 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return saved ? JSON.parse(saved) : defaultCompanyInfo;
   });
 
-  React.useEffect(() => { localStorage.setItem("emaar-services", JSON.stringify(services)); }, [services]);
-  React.useEffect(() => { localStorage.setItem("emaar-gallery", JSON.stringify(gallery)); }, [gallery]);
-  React.useEffect(() => { localStorage.setItem("emaar-company", JSON.stringify(companyInfo)); }, [companyInfo]);
+  // Custom setters that sync with localStorage and trigger storage events
+  const setServicesWithSync = React.useCallback((newServices: React.SetStateAction<ServiceItem[]>) => {
+    setServices((prev) => {
+      const updated = typeof newServices === 'function' ? newServices(prev) : newServices;
+      localStorage.setItem("emaar-services", JSON.stringify(updated));
+      // Trigger storage event for cross-tab synchronization
+      window.dispatchEvent(new CustomEvent('emaar-services-update', { detail: updated }));
+      return updated;
+    });
+  }, []);
+
+  const setGalleryWithSync = React.useCallback((newGallery: React.SetStateAction<GalleryItem[]>) => {
+    setGallery((prev) => {
+      const updated = typeof newGallery === 'function' ? newGallery(prev) : newGallery;
+      localStorage.setItem("emaar-gallery", JSON.stringify(updated));
+      // Trigger storage event for cross-tab synchronization
+      window.dispatchEvent(new CustomEvent('emaar-gallery-update', { detail: updated }));
+      return updated;
+    });
+  }, []);
+
+  const setCompanyInfoWithSync = React.useCallback((newCompanyInfo: React.SetStateAction<CompanyInfo>) => {
+    setCompanyInfo((prev) => {
+      const updated = typeof newCompanyInfo === 'function' ? newCompanyInfo(prev) : newCompanyInfo;
+      localStorage.setItem("emaar-company", JSON.stringify(updated));
+      // Trigger storage event for cross-tab synchronization
+      window.dispatchEvent(new CustomEvent('emaar-company-update', { detail: updated }));
+      return updated;
+    });
+  }, []);
+
+  // Listen for storage events and custom events for cross-tab synchronization
+  React.useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'emaar-services' && e.newValue) {
+        setServices(JSON.parse(e.newValue));
+      }
+      if (e.key === 'emaar-gallery' && e.newValue) {
+        setGallery(JSON.parse(e.newValue));
+      }
+      if (e.key === 'emaar-company' && e.newValue) {
+        setCompanyInfo(JSON.parse(e.newValue));
+      }
+    };
+
+    const handleCustomServiceUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent<ServiceItem[]>;
+      setServices(customEvent.detail);
+    };
+
+    const handleCustomGalleryUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent<GalleryItem[]>;
+      setGallery(customEvent.detail);
+    };
+
+    const handleCustomCompanyUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent<CompanyInfo>;
+      setCompanyInfo(customEvent.detail);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('emaar-services-update', handleCustomServiceUpdate);
+    window.addEventListener('emaar-gallery-update', handleCustomGalleryUpdate);
+    window.addEventListener('emaar-company-update', handleCustomCompanyUpdate);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('emaar-services-update', handleCustomServiceUpdate);
+      window.removeEventListener('emaar-gallery-update', handleCustomGalleryUpdate);
+      window.removeEventListener('emaar-company-update', handleCustomCompanyUpdate);
+    };
+  }, []);
 
   return (
-    <DataContext.Provider value={{ services, setServices, gallery, setGallery, companyInfo, setCompanyInfo }}>
+    <DataContext.Provider value={{ 
+      services, 
+      setServices: setServicesWithSync, 
+      gallery, 
+      setGallery: setGalleryWithSync, 
+      companyInfo, 
+      setCompanyInfo: setCompanyInfoWithSync 
+    }}>
       {children}
     </DataContext.Provider>
   );
