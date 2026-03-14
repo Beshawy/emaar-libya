@@ -25,7 +25,7 @@ const HomePage = () => {
             <img
               src="/images/loho.png"
               alt="Emaar Libya"
-               className="block h-56 sm:h-60 md:h-64 lg:h-72 xl:h-80 w-auto object-contain relative z-50 drop-shadow-[0_0_25px_rgba(255,255,255,0.8)]" 
+             className="block h-56 sm:h-60 md:h-64 lg:h-72 xl:h-80 w-auto object-contain relative z-50 drop-shadow-[0_0_25px_rgba(255,255,255,0.8)]" 
             />
           </div>
           <h1

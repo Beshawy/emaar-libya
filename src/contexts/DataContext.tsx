@@ -7,11 +7,13 @@ export interface ServiceItem {
   description: string;
   descriptionAr: string;
   image: string;
+  video?: string;
 }
 
 export interface GalleryItem {
   id: string;
   image: string;
+  video?: string;
   description: string;
   descriptionAr: string;
 }
