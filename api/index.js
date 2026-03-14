@@ -20,16 +20,7 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-// Multer + Cloudinary Storage
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'emaar-libya',
-    allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'mp4', 'mov'],
-    resource_type: 'auto'
-  },
-});
-const upload = multer({ storage: storage });
+// No longer using multer here; direct frontend uploading to Cloudinary instead.
 
 // MongoDB Connection
 const uri = process.env.MONGODB_URI;
@@ -55,11 +46,21 @@ getDatabase().catch(console.error);
 
 // =============== API ROUTES ===============
 
-// Upload Route
-app.post('/api/upload', upload.single('file'), (req, res) => {
+// --- Upload Signature Route for Direct Frontend Uploads ---
+app.get('/api/upload-signature', (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
-    res.json({ url: req.file.path });
+    const timestamp = Math.round((new Date).getTime() / 1000);
+    const signature = cloudinary.utils.api_sign_request({
+      timestamp: timestamp,
+      folder: 'emaar-libya'
+    }, process.env.API_SECRET);
+    
+    res.json({ 
+      timestamp, 
+      signature, 
+      apiKey: process.env.API_KEY, 
+      cloudName: process.env.CLOUD_NAME 
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

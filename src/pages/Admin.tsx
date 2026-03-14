@@ -7,6 +7,40 @@ import { toast } from "sonner";
 const ADMIN_EMAIL = "emarlybya44@gmail.com";
 const ADMIN_PASS = "Password246";
 
+const uploadToCloudinary = async (file: File) => {
+  try {
+    toast.info("جاري تجهيز الرفع الآمن المباشر...");
+    const sigRes = await fetch("/api/upload-signature");
+    const { timestamp, signature, apiKey, cloudName } = await sigRes.json();
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("api_key", apiKey);
+    formData.append("timestamp", timestamp);
+    formData.append("signature", signature);
+    formData.append("folder", "emaar-libya");
+
+    toast.info("جاري رفع الملف للسحابة...");
+    const resourceType = file.type.startsWith("video/") ? "video" : "image";
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
+      method: "POST",
+      body: formData,
+    });
+    
+    const data = await res.json();
+    if (data.secure_url) {
+      toast.success("تم الرفع بنجاح");
+      return data.secure_url;
+    } else {
+      throw new Error(data.error?.message || "Upload failed");
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("حدث خطأ أثناء رفع الملف");
+    return null;
+  }
+};
+
 const AdminPage = () => {
   const { t, lang } = useLanguage();
   const { services, setServices, gallery, setGallery, companyInfo, setCompanyInfo } = useData();
@@ -289,37 +323,15 @@ const ServiceForm = ({
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      toast.info("جاري رفع الصورة...");
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.url) {
-        setForm((prev) => ({ ...prev, image: data.url }));
-        toast.success("تم الرفع بنجاح");
-      }
-    } catch (err) {
-      toast.error("خطأ في رفع الصورة");
-    }
+    const url = await uploadToCloudinary(file);
+    if (url) setForm((prev) => ({ ...prev, image: url }));
   };
 
   const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      toast.info("جاري رفع الفيديو...");
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.url) {
-        setForm((prev) => ({ ...prev, video: data.url }));
-        toast.success("تم الرفع بنجاح");
-      }
-    } catch (err) {
-      toast.error("خطأ في رفع الفيديو");
-    }
+    const url = await uploadToCloudinary(file);
+    if (url) setForm((prev) => ({ ...prev, video: url }));
   };
 
   return (
@@ -381,37 +393,15 @@ const GalleryForm = ({
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      toast.info("جاري رفع الصورة...");
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.url) {
-        setForm((prev) => ({ ...prev, image: data.url }));
-        toast.success("تم الرفع بنجاح");
-      }
-    } catch (err) {
-      toast.error("خطأ في رفع الصورة");
-    }
+    const url = await uploadToCloudinary(file);
+    if (url) setForm((prev) => ({ ...prev, image: url }));
   };
 
   const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      toast.info("جاري رفع الفيديو...");
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.url) {
-        setForm((prev) => ({ ...prev, video: data.url }));
-        toast.success("تم الرفع بنجاح");
-      }
-    } catch (err) {
-      toast.error("خطأ في رفع الفيديو");
-    }
+    const url = await uploadToCloudinary(file);
+    if (url) setForm((prev) => ({ ...prev, video: url }));
   };
 
   return (
