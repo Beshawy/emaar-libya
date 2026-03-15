@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { DoorOpen, LayoutGrid, GlassWater, Gem, Calendar, Award, Clock } from "lucide-react";
+import { DoorOpen, LayoutGrid, GlassWater, Layers, Calendar, Award, Clock } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 
 const HomePage = () => {
@@ -10,7 +10,7 @@ const HomePage = () => {
     { icon: DoorOpen, ...t.capabilities.doors },
     { icon: LayoutGrid, ...t.capabilities.windows },
     { icon: GlassWater, ...t.capabilities.glass },
-    { icon: Gem, ...t.capabilities.decor },
+    { icon: Layers, ...t.capabilities.decor },
   ];
 
   return (

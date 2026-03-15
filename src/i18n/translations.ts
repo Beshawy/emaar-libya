@@ -29,7 +29,7 @@ export const translations = {
       doors: { title: "Aluminum Doors", desc: "Premium quality aluminum doors designed for durability, security, and modern aesthetics." },
       windows: { title: "Aluminum Windows", desc: "Energy-efficient aluminum windows with superior insulation and sleek designs." },
       glass: { title: "Double Glass", desc: "Professional double glazing installations for thermal and sound insulation." },
-      decor: { title: "Decorative Structures", desc: "Custom aluminum decorative elements for facades, partitions, and interior design." },
+      decor: { title: "Double Glass (Double Glazing)", desc: "Premium double glass panels designed to provide outstanding thermal and sound insulation with a sleek, modern finish." },
     },
     about: {
       pageTitle: "About Us",
@@ -118,7 +118,7 @@ export const translations = {
       doors: { title: "أبواب ألومنيوم", desc: "أبواب ألومنيوم عالية الجودة مصممة للمتانة والأمان والجماليات الحديثة." },
       windows: { title: "نوافذ ألومنيوم", desc: "نوافذ ألومنيوم موفرة للطاقة مع عزل فائق وتصاميم أنيقة." },
       glass: { title: "زجاج مزدوج", desc: "تركيبات زجاج مزدوج احترافية للعزل الحراري والصوتي." },
-      decor: { title: "هياكل زخرفية", desc: "عناصر ألومنيوم زخرفية مخصصة للواجهات والحواجز والتصميم الداخلي." },
+      decor: { title: "زجاج مزدوج (دبل جلاس)", desc: "ألواح زجاج مزدوج (دبل جلاس) فائقة الجودة، توفر عزلاً حرارياً وصوتياً ممتازاً، وتضفي لمسة عصرية وأنيقة على الواجهات." },
     },
     about: {
       pageTitle: "من نحن",
