@@ -57,14 +57,14 @@ const ServicesPage = () => {
       <section className="py-16 bg-card overflow-x-hidden min-h-[50vh]">
         <div className="container mx-auto px-4">
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full flex flex-col items-center">
-            <TabsList className="mb-10 w-full max-w-3xl flex-wrap h-auto p-1 bg-muted/50 justify-center">
+            <TabsList className="mb-10 w-full max-w-4xl grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap h-auto p-2 bg-muted/40 gap-2 sm:gap-3 rounded-2xl md:rounded-full border border-border/50 justify-center">
               {categories.map((cat) => {
                 const label = (t as any).services.categories?.[cat] || cat;
                 return (
                   <TabsTrigger 
                     key={cat} 
                     value={cat} 
-                    className="font-cairo font-medium text-sm sm:text-base px-3 sm:px-6 py-2 sm:py-2.5 data-[state=active]:bg-accent data-[state=active]:text-white transition-all shadow-none rounded-full"
+                    className="font-cairo font-semibold text-xs sm:text-sm md:text-base px-2 sm:px-6 py-3 sm:py-2.5 data-[state=active]:bg-accent data-[state=active]:text-white transition-all shadow-none rounded-xl md:rounded-full whitespace-normal text-center flex items-center justify-center min-h-12 leading-snug"
                   >
                     {label}
                   </TabsTrigger>
