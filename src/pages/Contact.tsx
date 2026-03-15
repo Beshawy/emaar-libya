@@ -23,7 +23,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <section className="relative py-16 md:py-24 overflow-hidden flex items-center justify-center">
         <img
           src="/images/photo2.jpg"

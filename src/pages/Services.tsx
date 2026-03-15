@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useData } from "@/contexts/DataContext";
 import AnimatedSection from "@/components/AnimatedSection";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const ServicesPage = () => {
   const { t, lang } = useLanguage();
   const { services } = useData();
+  const [selectedService, setSelectedService] = useState<any>(null);
 
   return (
     <div>
@@ -27,11 +30,11 @@ const ServicesPage = () => {
 
       <section className="py-16 bg-card overflow-x-hidden">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, i) => (
-              <AnimatedSection key={service.id} delay={i * 0.1} direction={i % 2 === 0 ? "left" : "right"}>
-                <div className="card-glow bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                  <div className="aspect-[4/3] md:aspect-video overflow-hidden">
+              <AnimatedSection key={service.id} delay={i * 0.1} direction={i % 2 === 0 ? "left" : "right"} className="flex">
+                <div className="card-glow bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full flex flex-col h-full">
+                  <div className="aspect-[4/3] md:aspect-video overflow-hidden shrink-0">
                     <img
                       src={service.image}
                       alt={service.title}
@@ -39,13 +42,19 @@ const ServicesPage = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="p-5 md:p-6">
-                    <h3 className="font-cairo font-bold text-lg md:text-xl text-foreground mb-2 leading-snug">
+                  <div className="p-5 md:p-6 flex flex-col flex-grow">
+                    <h3 className="font-cairo font-bold text-lg md:text-xl text-foreground mb-3 leading-snug">
                       {lang === "ar" ? service.titleAr : service.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed flex-grow">
                       {lang === "ar" ? service.descriptionAr : service.description}
                     </p>
+                    <button
+                      onClick={() => setSelectedService(service)}
+                      className="text-accent hover:text-accent/80 transition-colors text-sm font-semibold mt-4 self-start"
+                    >
+                      {lang === "ar" ? "عرض المزيد" : "Read More"}
+                    </button>
                   </div>
                 </div>
               </AnimatedSection>
@@ -53,6 +62,42 @@ const ServicesPage = () => {
           </div>
         </div>
       </section>
+
+      <Dialog open={!!selectedService} onOpenChange={(open) => !open && setSelectedService(null)}>
+        <DialogContent className="sm:max-w-xl p-0 overflow-hidden bg-card border-border max-h-[90vh] flex flex-col">
+          {selectedService && (
+            <>
+              <div className="relative h-48 sm:h-64 shrink-0">
+                <img
+                  src={selectedService.image}
+                  alt={selectedService.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                <div className="absolute bottom-4 px-6 w-full">
+                  <DialogHeader>
+                    <DialogTitle className="text-white font-cairo text-2xl drop-shadow-md">
+                      {lang === "ar" ? selectedService.titleAr : selectedService.title}
+                    </DialogTitle>
+                  </DialogHeader>
+                </div>
+              </div>
+              <div className="p-6 overflow-y-auto">
+                <p className="text-foreground leading-loose text-sm sm:text-base whitespace-pre-wrap">
+                  {lang === "ar" ? selectedService.descriptionAr : selectedService.description}
+                </p>
+                {selectedService.video && (
+                  <div className="mt-6 rounded-lg overflow-hidden border border-border">
+                    <video src={selectedService.video} controls className="w-full aspect-video bg-black">
+                      متصفحك لا يدعم تشغيل الفيديو.
+                    </video>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

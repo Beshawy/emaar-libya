@@ -14,7 +14,7 @@ const HomePage = () => {
   ];
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* Hero */}
       <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 flex flex-col items-center justify-center overflow-hidden">
         <img src="/images/hero.jpg" alt="Emaar Libya Factory" className="absolute inset-0 w-full h-full object-cover" />

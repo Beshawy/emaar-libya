@@ -6,7 +6,7 @@ const AboutPage = () => {
   const { t } = useLanguage();
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* Header */}
       <section className="relative py-24 md:py-32 overflow-hidden flex items-center justify-center">
         <img
