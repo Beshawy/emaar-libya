@@ -58,7 +58,7 @@ const HomePage = () => {
           <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div className="flex flex-col items-center gap-2 stat-pop">
               <Calendar className="h-8 w-8 text-accent float-icon" />
-              <span className="text-3xl font-cairo font-bold text-primary">2007</span>
+              <span className="text-3xl font-cairo font-bold text-primary">2005</span>
               <span className="text-sm text-muted-foreground">{t.companyInfo.founded}</span>
             </div>
             <div className="flex flex-col items-center gap-2 stat-pop">
