@@ -104,6 +104,15 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
+
+            <div className="mt-12 text-center">
+              <Link 
+                to="/services" 
+                className="inline-flex items-center justify-center bg-accent text-white px-8 py-3 rounded-full font-cairo font-bold text-lg hover:bg-accent/90 transition-all hover:scale-105 shadow-md hover:shadow-lg"
+              >
+                {lang === 'ar' ? 'عرض جميع الخدمات والتفاصيل' : 'View All Services & Details'}
+              </Link>
+            </div>
           </div>
         </section>
       </AnimatedSection>
