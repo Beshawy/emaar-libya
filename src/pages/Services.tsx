@@ -1,13 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useData } from "@/contexts/DataContext";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ServicesPage = () => {
   const { t, lang } = useLanguage();
   const { services } = useData();
   const [selectedService, setSelectedService] = useState<any>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlCategory = searchParams.get("category") || "all";
+  const [activeTab, setActiveTab] = useState(urlCategory);
+
+  useEffect(() => {
+    setActiveTab(urlCategory);
+  }, [urlCategory]);
+
+  const handleTabChange = (val: string) => {
+    setActiveTab(val);
+    if (val === "all") {
+      searchParams.delete("category");
+    } else {
+      searchParams.set("category", val);
+    }
+    setSearchParams(searchParams);
+  };
+
+  const categories = ["all", "doors", "windows", "glass", "decor", "other"];
+
+  const filteredServices = useMemo(() => {
+    if (activeTab === "all") return services;
+    return services.filter(s => s.category === activeTab);
+  }, [services, activeTab]);
 
   return (
     <div>
@@ -28,38 +54,65 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      <section className="py-16 bg-card overflow-x-hidden">
+      <section className="py-16 bg-card overflow-x-hidden min-h-[50vh]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, i) => (
-              <AnimatedSection key={service.id} delay={i * 0.1} direction={i % 2 === 0 ? "left" : "right"} className="flex">
-                <div className="card-glow bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full flex flex-col h-full">
-                  <div className="aspect-[4/3] md:aspect-video overflow-hidden shrink-0">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="p-5 md:p-6 flex flex-col flex-grow">
-                    <h3 className="font-cairo font-bold text-lg md:text-xl text-foreground mb-3 leading-snug">
-                      {lang === "ar" ? service.titleAr : service.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed flex-grow">
-                      {lang === "ar" ? service.descriptionAr : service.description}
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full flex flex-col items-center">
+            <TabsList className="mb-10 w-full max-w-3xl flex-wrap h-auto p-1 bg-muted/50 justify-center">
+              {categories.map((cat) => {
+                const label = (t as any).services.categories?.[cat] || cat;
+                return (
+                  <TabsTrigger 
+                    key={cat} 
+                    value={cat} 
+                    className="font-cairo font-medium text-sm sm:text-base px-3 sm:px-6 py-2 sm:py-2.5 data-[state=active]:bg-accent data-[state=active]:text-white transition-all shadow-none rounded-full"
+                  >
+                    {label}
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+
+            <div className="w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredServices.length > 0 ? (
+                  filteredServices.map((service, i) => (
+                    <AnimatedSection key={service.id} delay={i * 0.1} direction={i % 2 === 0 ? "up" : "fade"} className="flex">
+                      <div className="card-glow bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full flex flex-col h-full">
+                        <div className="aspect-[4/3] md:aspect-video overflow-hidden shrink-0">
+                          <img
+                            src={service.image}
+                            alt={service.title}
+                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="p-5 md:p-6 flex flex-col flex-grow">
+                          <h3 className="font-cairo font-bold text-lg md:text-xl text-foreground mb-3 leading-snug">
+                            {lang === "ar" ? service.titleAr : service.title}
+                          </h3>
+                          <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed flex-grow">
+                            {lang === "ar" ? service.descriptionAr : service.description}
+                          </p>
+                          <button
+                            onClick={() => setSelectedService(service)}
+                            className="text-accent hover:text-accent/80 transition-colors text-sm font-semibold mt-4 self-start"
+                          >
+                            {lang === "ar" ? "عرض المزيد" : "Read More"}
+                          </button>
+                        </div>
+                      </div>
+                    </AnimatedSection>
+                  ))
+                ) : (
+                  <div className="col-span-full py-20 text-center">
+                    <p className="text-muted-foreground text-lg font-cairo">
+                      {lang === "ar" ? "لا توجد خدمات متاحة في هذا القسم حالياً." : "No services available in this category currently."}
                     </p>
-                    <button
-                      onClick={() => setSelectedService(service)}
-                      className="text-accent hover:text-accent/80 transition-colors text-sm font-semibold mt-4 self-start"
-                    >
-                      {lang === "ar" ? "عرض المزيد" : "Read More"}
-                    </button>
                   </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
+                )}
+              </div>
+            </div>
+          </Tabs>
         </div>
       </section>
 

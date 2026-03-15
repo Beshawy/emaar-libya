@@ -9,6 +9,7 @@ export interface ServiceItem {
   descriptionAr: string;
   image: string;
   video?: string;
+  category?: "doors" | "windows" | "glass" | "decor" | "other";
 }
 
 export interface GalleryItem {

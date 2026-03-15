@@ -210,7 +210,7 @@ const AdminPage = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h2 className="font-cairo font-semibold text-base sm:text-lg text-foreground">{t.admin.manageServices}</h2>
               <button
-                onClick={() => setEditingService({ id: "", title: "", titleAr: "", description: "", descriptionAr: "", image: "" })}
+                onClick={() => setEditingService({ id: "", title: "", titleAr: "", description: "", descriptionAr: "", image: "", category: "doors" })}
                 className="flex items-center justify-center gap-1 bg-accent text-accent-foreground px-3 py-2 rounded text-xs sm:text-sm font-medium w-full sm:w-auto"
               >
                 <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -226,8 +226,15 @@ const AdminPage = () => {
                   <div className="flex items-center gap-3">
                     <img src={s.image} alt="" className="h-10 w-10 sm:h-12 sm:w-12 rounded object-cover flex-shrink-0" />
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-foreground text-xs sm:text-sm truncate">{lang === "ar" ? s.titleAr : s.title}</p>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{lang === "ar" ? s.descriptionAr : s.description}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-foreground text-xs sm:text-sm truncate">{lang === "ar" ? s.titleAr : s.title}</p>
+                        {s.category && (
+                          <span className="text-[10px] bg-accent/10 text-accent px-2 py-0.5 rounded-full whitespace-nowrap">
+                            {(t as any).services.categories?.[s.category] || s.category}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{lang === "ar" ? s.descriptionAr : s.description}</p>
                     </div>
                   </div>
                   <div className="flex gap-1 sm:gap-2">
@@ -316,7 +323,7 @@ const ServiceForm = ({
   item: ServiceItem;
   onSave: (s: ServiceItem) => void;
   onCancel: () => void;
-  t: { admin: { image: string; save: string; cancel: string } };
+  t: any;
 }) => {
   const [form, setForm] = useState(item);
 
@@ -341,6 +348,18 @@ const ServiceForm = ({
       <textarea placeholder="Description (EN)" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-3 py-2 rounded border border-input bg-background text-foreground text-sm" rows={2} />
       <textarea placeholder="الوصف (AR)" value={form.descriptionAr} onChange={(e) => setForm({ ...form, descriptionAr: e.target.value })} className="w-full px-3 py-2 rounded border border-input bg-background text-foreground text-sm" rows={2} dir="rtl" />
       
+      <select
+        value={form.category || "other"}
+        onChange={(e) => setForm({ ...form, category: e.target.value as ServiceItem["category"] })}
+        className="w-full px-3 py-2 rounded border border-input bg-background text-foreground text-sm"
+        dir="auto"
+      >
+        <option value="doors">{t.services.categories?.doors || "Doors"}</option>
+        <option value="windows">{t.services.categories?.windows || "Windows"}</option>
+        <option value="glass">{t.services.categories?.glass || "Double Glass"}</option>
+        <option value="decor">{t.services.categories?.decor || "Decor"}</option>
+        <option value="other">{t.services.categories?.other || "Other"}</option>
+      </select>
       {/* Image Upload */}
       <div className="space-y-2">
         <label className="block text-sm text-muted-foreground">{t.admin.image}</label>

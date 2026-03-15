@@ -7,10 +7,10 @@ const HomePage = () => {
   const { t, lang } = useLanguage();
 
   const capabilities = [
-    { icon: DoorOpen, ...t.capabilities.doors },
-    { icon: LayoutGrid, ...t.capabilities.windows },
-    { icon: GlassWater, ...t.capabilities.glass },
-    { icon: Layers, ...t.capabilities.decor },
+    { id: "doors", icon: DoorOpen, ...t.capabilities.doors },
+    { id: "windows", icon: LayoutGrid, ...t.capabilities.windows },
+    { id: "glass", icon: GlassWater, ...t.capabilities.glass },
+    { id: "decor", icon: Layers, ...t.capabilities.decor },
   ];
 
   return (
@@ -97,11 +97,15 @@ const HomePage = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {capabilities.map((item, i) => (
-                <div key={i} className="stagger-item card-glow bg-card border border-border rounded-lg p-6 text-center">
+                <Link 
+                  to={`/services?category=${item.id}`}
+                  key={i} 
+                  className="stagger-item card-glow bg-card border border-border rounded-lg p-6 text-center cursor-pointer transition-transform duration-300 hover:-translate-y-2 block"
+                >
                   <item.icon className="h-10 w-10 text-accent mx-auto mb-4 float-icon" style={{ animationDelay: `${i * 0.3}s` }} />
                   <h3 className="font-cairo font-semibold text-lg text-foreground mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
+                </Link>
               ))}
             </div>
 

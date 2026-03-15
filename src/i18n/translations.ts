@@ -44,6 +44,14 @@ export const translations = {
     services: {
       pageTitle: "Our Services",
       pageSubtitle: "Professional aluminum manufacturing solutions",
+      categories: {
+        all: "All Services",
+        doors: "Aluminum Doors",
+        windows: "Aluminum Windows",
+        glass: "Double Glass",
+        decor: "Double Glass (Decor)",
+        other: "Other"
+      }
     },
     gallery: {
       pageTitle: "Gallery & Projects",
@@ -85,6 +93,7 @@ export const translations = {
       title: "Title",
       description: "Description",
       image: "Image URL",
+      category: "Category",
       invalidCredentials: "Invalid credentials",
     },
   },
@@ -133,6 +142,14 @@ export const translations = {
     services: {
       pageTitle: "خدماتنا",
       pageSubtitle: "حلول تصنيع الألومنيوم الاحترافية",
+      categories: {
+        all: "جميع الخدمات",
+        doors: "أبواب ألومنيوم",
+        windows: "نوافذ ألومنيوم",
+        glass: "زجاج مزدوج",
+        decor: "زجاج مزدوج (ديكور)",
+        other: "أخرى"
+      }
     },
     gallery: {
       pageTitle: "المعرض والمشاريع",
@@ -174,6 +191,7 @@ export const translations = {
       title: "العنوان",
       description: "الوصف",
       image: "رابط الصورة",
+      category: "القسم المطابق",
       invalidCredentials: "بيانات الدخول غير صحيحة",
     },
   },
