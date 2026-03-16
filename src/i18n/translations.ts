@@ -21,7 +21,7 @@ export const translations = {
     },
     aboutPreview: {
       title: "About Emaar Libya",
-      text: "Emaar Libya is a leading manufacturer of premium aluminum doors, windows, and decorative structures. With a commitment to quality craftsmanship and competitive pricing, we have been serving Libya's construction industry since 2007.",
+      text: "Emaar Libya is a leading manufacturer of premium aluminum doors, windows, and decorative structures. With a commitment to quality craftsmanship and competitive pricing, we have been serving Libya's construction industry since 2005.",
       learnMore: "Learn More",
     },
     capabilities: {
@@ -35,7 +35,7 @@ export const translations = {
       pageTitle: "About Us",
       pageSubtitle: "Learn about Emaar Libya's history and mission",
       historyTitle: "Our History",
-      historyText: "Emaar Libya was founded in 2007 with a vision to become Libya's premier aluminum manufacturing company. After years of dedication to quality and customer satisfaction, the company received its official operating license in 2012, marking a milestone in our growth journey.",
+      historyText: "Emaar Libya was founded in 2005 with a vision to become Libya's premier aluminum manufacturing company. After years of dedication to quality and customer satisfaction, the company received its official operating license in 2012, marking a milestone in our growth journey.",
       missionTitle: "Our Mission",
       missionText: "To provide the highest quality aluminum products — doors, windows, double glass installations, and decorative structures — at competitive prices, while maintaining the trust and satisfaction of our clients, partners, and stakeholders.",
       licenseTitle: "Official License",
@@ -70,7 +70,7 @@ export const translations = {
       formSuccess: "Message sent successfully!",
     },
     footer: {
-      description: "Leading manufacturer of premium aluminum doors, windows, and decorative structures in Libya. Delivering quality since 2007.",
+      description: "Leading manufacturer of premium aluminum doors, windows, and decorative structures in Libya. Delivering quality since 2005.",
       quickLinks: "Quick Links",
       contactInfo: "Contact Information",
       rights: "© 2026 Emaar Libya. All rights reserved.",
@@ -119,7 +119,7 @@ export const translations = {
     },
     aboutPreview: {
       title: "عن مصنع إعمار ليبيا",
-      text: "إعمار ليبيا هو مصنع رائد في تصنيع الأبواب والنوافذ والهياكل الزخرفية من الألومنيوم عالي الجودة. بفضل التزامنا بالحرفية والأسعار التنافسية، نخدم قطاع البناء في ليبيا منذ عام 2007.",
+      text: "إعمار ليبيا هو مصنع رائد في تصنيع الأبواب والنوافذ والهياكل الزخرفية من الألومنيوم عالي الجودة. بفضل التزامنا بالحرفية والأسعار التنافسية، نخدم قطاع البناء في ليبيا منذ عام 2005.",
       learnMore: "اعرف المزيد",
     },
     capabilities: {
@@ -133,7 +133,7 @@ export const translations = {
       pageTitle: "من نحن",
       pageSubtitle: "تعرف على تاريخ ورسالة مصنع إعمار ليبيا",
       historyTitle: "تاريخنا",
-      historyText: "تأسس مصنع إعمار ليبيا في عام 2007 برؤية ليصبح المصنع الرائد في تصنيع الألومنيوم في ليبيا. بعد سنوات من التفاني في الجودة ورضا العملاء، حصل المصنع على رخصته الرسمية في عام 2012.",
+      historyText: "تأسس مصنع إعمار ليبيا في عام 2005 برؤية ليصبح المصنع الرائد في تصنيع الألومنيوم في ليبيا. بعد سنوات من التفاني في الجودة ورضا العملاء، حصل المصنع على رخصته الرسمية في عام 2012.",
       missionTitle: "رسالتنا",
       missionText: "تقديم أعلى جودة من منتجات الألومنيوم — الأبواب والنوافذ وتركيبات الزجاج المزدوج والهياكل الزخرفية — بأسعار تنافسية، مع الحفاظ على ثقة ورضا عملائنا وشركائنا.",
       licenseTitle: "الترخيص الرسمي",
@@ -168,7 +168,7 @@ export const translations = {
       formSuccess: "تم إرسال الرسالة بنجاح!",
     },
     footer: {
-      description: "مصنع رائد في تصنيع أبواب ونوافذ وهياكل ألومنيوم عالية الجودة في ليبيا. نقدم الجودة منذ 2007.",
+      description: "مصنع رائد في تصنيع أبواب ونوافذ وهياكل ألومنيوم عالية الجودة في ليبيا. نقدم الجودة منذ 2005.",
       quickLinks: "روابط سريعة",
       contactInfo: "معلومات الاتصال",
       rights: "© 2026 إعمار ليبيا. جميع الحقوق محفوظة.",
