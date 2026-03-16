@@ -40,7 +40,7 @@ const AboutPage = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="stat-pop card-glow bg-muted rounded-lg p-6 text-center">
                   <Calendar className="h-6 w-6 text-accent mx-auto mb-1 float-icon" />
-                  <span className="text-3xl font-cairo font-bold text-primary">2007</span>
+                  <span className="text-3xl font-cairo font-bold text-primary">2005</span>
                   <p className="text-xs text-muted-foreground mt-1">{t.companyInfo.founded}</p>
                 </div>
                 <div className="stat-pop card-glow bg-muted rounded-lg p-6 text-center">
