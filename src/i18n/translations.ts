@@ -10,7 +10,7 @@ export const translations = {
     },
     hero: {
       title: "Emaar Libya for Aluminum Doors & Windows",
-      subtitle: "Delivering Quality Since 2007",
+      subtitle: "Delivering Quality Since 2005",
       contact: "Contact Us",
       products: "View Products",
     },
@@ -108,7 +108,7 @@ export const translations = {
     },
     hero: {
       title: "مصنع إعمار ليبيا للأبواب والنوافذ <span class='block mt-3 md:mt-5'>الألومنيوم</span>",
-      subtitle: "نقدم الجودة منذ 2007",
+      subtitle: "نقدم الجودة منذ 2005",
       contact: "اتصل بنا",
       products: "عرض المنتجات",
     },
