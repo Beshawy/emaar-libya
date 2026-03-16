@@ -1,5 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Calendar, Award, Target, FileCheck } from "lucide-react";
+import { Calendar, Award, Target, FileCheck, Clock } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 
 const AboutPage = () => {
@@ -37,7 +37,7 @@ const AboutPage = () => {
                 </div>
                 <p className="text-muted-foreground leading-relaxed">{t.about.historyText}</p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="stat-pop card-glow bg-muted rounded-lg p-6 text-center">
                   <Calendar className="h-6 w-6 text-accent mx-auto mb-1 float-icon" />
                   <span className="text-3xl font-cairo font-bold text-primary">2005</span>
@@ -47,6 +47,11 @@ const AboutPage = () => {
                   <Award className="h-6 w-6 text-accent mx-auto mb-1 float-icon" />
                   <span className="text-3xl font-cairo font-bold text-primary">2012</span>
                   <p className="text-xs text-muted-foreground mt-1">{t.companyInfo.licensed}</p>
+                </div>
+                <div className="stat-pop card-glow bg-muted rounded-lg p-6 text-center col-span-2 sm:col-span-1">
+                  <Clock className="h-6 w-6 text-accent mx-auto mb-1 float-icon" style={{ animationDelay: "0.5s" }} />
+                  <span className="text-3xl font-cairo font-bold text-primary">+20</span>
+                  <p className="text-xs text-muted-foreground mt-1">{t.companyInfo.experience}</p>
                 </div>
               </div>
             </div>

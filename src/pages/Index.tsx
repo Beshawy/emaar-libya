@@ -68,7 +68,7 @@ const HomePage = () => {
             </div>
             <div className="flex flex-col items-center gap-2 stat-pop">
               <Clock className="h-8 w-8 text-accent float-icon" style={{ animationDelay: "1s" }} />
-              <span className="text-3xl font-cairo font-bold text-primary">+18</span>
+              <span className="text-3xl font-cairo font-bold text-primary">+20</span>
               <span className="text-sm text-muted-foreground">{t.companyInfo.experience}</span>
             </div>
           </div>
